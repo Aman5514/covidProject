@@ -1,0 +1,120 @@
+  <script>
+    const search_button = document.getElementById('search');
+    const searchBox = document.getElementById('search_box');
+    const Alert =document.getElementById('alert');
+    const confirmData =document.getElementById('confirmdata');
+    const deathData =document.getElementById('deathdata');
+    const recoverData =document.getElementById('recoverdata');
+    const stateName =document.getElementById('state');
+    const date =document.getElementById('date');
+
+
+    search_button.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const searchValue = searchBox.value;
+    console.log(searchValue)
+
+    if(searchValue === "")
+    {
+         Alert.style.opacity = 1;
+        Alert.style.height = "5vh",display = "visible";
+        Alert.innerText = "Empty Search is not Valid Please Try Again"
+            confirmData.innerText = "";
+            deathData.innerText = "";
+            recoverData.innerText = "";
+            stateName.innerText = "State";
+            date.innerText = "Date/Time";
+
+    }
+
+    else if(!isNaN(searchValue))
+    {
+     Alert.style.opacity = 1;
+     Alert.innerText = "Number is not Valid"
+     Alert.style.height = "5vh",display = "visible";
+            confirmData.innerText = "";
+            deathData.innerText = "";
+            recoverData.innerText = "";
+            stateName.innerText = "State";
+            date.innerText = "Date/Time";
+    }
+
+    else 
+    {
+      Alert.innerText = "";
+
+        const apiData = await fetch("https://covid-19-coronavirus-statistics.p.rapidapi.com/v1/stats?country=India", {
+          "method": "GET",
+          "headers": {
+            "x-rapidapi-key": "33764b9b30msh741f52e8de67a6fp16832fjsn60afe0b55de3",
+            "x-rapidapi-host": "covid-19-coronavirus-statistics.p.rapidapi.com"
+          }
+        })
+        const response = await apiData.json();
+        const bodyData = await response.data.covid19Stats;
+
+        const stateFilter = bodyData.filter((element)=>
+        {
+          return element.province == searchValue;
+        })
+          const stateData = stateFilter.map((data)=>
+        {
+            const myDate = new Date;
+            const formatedDate = dates(myDate)
+
+
+            confirmData.innerText = data.confirmed;
+            deathData.innerText = data.deaths;
+            recoverData.innerText = data.recovered;
+            stateName.innerText = data.keyId;
+            date.innerText = formatedDate;
+
+
+
+
+
+
+
+
+
+            function dates(dateobj)
+            {
+              const parts = {
+                date: dateobj.getDate(),
+                month: dateobj.getMonth() + 1,
+                year: dateobj.getFullYear()
+              }
+              return `${parts.date}/${parts.month}/${parts.year}`
+            }
+            console.log(myDate)
+            console.log(formatedDate)
+
+        })
+        console.log(stateFilter)
+
+        if(stateFilter == "")
+        {
+            Alert.style.opacity = 1;
+            Alert.style.height = "5vh",display = "visible";
+            Alert.innerText = "Enter State Name Properly For Ex- Delhi , Bihar ,etc... "
+            confirmData.innerText = "";
+            deathData.innerText = "";
+            recoverData.innerText = "";
+            stateName.innerText = "State";
+            date.innerText = "Date/Time";
+        }
+        else
+        {
+          Alert.innerText = "";
+          Alert.style.height = "0vh";
+          Alert.style.opacity = 1;
+        }
+     
+
+        
+
+    }
+
+    })
+  </script>

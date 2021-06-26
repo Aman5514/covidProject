@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+{{>headerlinks}}
+{{>style}}
+
+<body>
+  <section>
+    {{>header}}
+    <div class="main_container">
+      <h2 id="alert"></h2>
+      <div id="displaydata">
+        <h3 id="state">Search Infected States</h3>
+        <h3 id="date">Date</h3>
+      </div>
+      <div class="main_cover">
+
+        <div class="covid_data">
+
+          <div class="confirm">
+            <h3><i class="fas fa-disease c confirm_icon"></i>confirmed</h3>
+            <h4 id="confirmdata"></h4>
+          </div>
+
+          <div class="death">
+            <h3><i class="fas fa-head-side-mask c death_icon"></i>death</h3>
+            <h4 id="deathdata"></h4>
+          </div>
+
+          <div class="recover">
+            <h3><i class="fas fa-heartbeat c recover_icon"></i>recovered</h3>
+            <h4 id="recoverdata"></h4>
+          </div>
+
+        </div>
+        <div class="covid_img">
+          <img src="https://images.pexels.com/photos/3902882/pexels-photo-3902882.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Covid_photo">
+        </div>
+      </div>
+      {{>footer}}
+    </div>
+  </section>
+  {{>script}}
+</body>
+</html>
